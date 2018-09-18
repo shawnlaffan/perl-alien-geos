@@ -1,8 +1,8 @@
-# perl-alien-gdal
-A Perl Alien package to install [GDAL](http://www.gdal.org/)
+# perl-alien-geos
+A Perl Alien package to install [GEOS, the Geometry Engine, Open Source](http://geos.osgeo.org/)
 
-[![Build Status](https://travis-ci.org/shawnlaffan/perl-alien-gdal.svg?branch=master)](https://travis-ci.org/shawnlaffan/perl-alien-gdal)
+[![Build Status](https://travis-ci.org/shawnlaffan/perl-alien-geos.svg?branch=master)](https://travis-ci.org/shawnlaffan/perl-alien-geos)
 
-[![Build status](https://ci.appveyor.com/api/projects/status/1tqk5rd40cv2ve8q?svg=true)](https://ci.appveyor.com/project/shawnlaffan/perl-alien-gdal)
+[![Build status](https://ci.appveyor.com/api/projects/status/s4c5nmnrk0m1kpkr?svg=true)](https://ci.appveyor.com/project/shawnlaffan/perl-alien-geos)
 
-[![CPAN version](https://badge.fury.io/pl/Alien-gdal.svg)](http://badge.fury.io/pl/Alien-gdal)
+[![CPAN version](https://badge.fury.io/pl/Alien-gdal.svg)](http://badge.fury.io/pl/Alien-geos)
