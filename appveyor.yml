@@ -30,5 +30,5 @@ build_script:
   - gmake
   - gmake test
   #  some feedback
-  - type blib\lib\auto\share\dist\Alien-gdal\lib\pkgconfig\gdal.pc
+  #- type blib\lib\auto\share\dist\Alien-gdal\lib\pkgconfig\gdal.pc
 
