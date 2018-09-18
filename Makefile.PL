@@ -29,7 +29,6 @@ my %WriteMakefileArgs = (
     },
     "BUILD_REQUIRES" => {
         %common_reqs,
-        Alien::geos,
     },
     "TEST_REQUIRES" => {
         "Test::Alien" => 0,
