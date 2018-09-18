@@ -18,7 +18,11 @@ install:
   #- cpanm --quiet --notest HTML::LinkExtor
   #- cpanm --quiet --notest Test::CChecker
   #- cpanm --quiet --notest Alien::MSYS
-  - cpanm -v --notest --installdeps .
+  - cpanm --quiet --notest Alien::Build::MM
+  - cpanm --quiet --notest Sort::Versions
+  - cpanm --quiet --notest PkgConfig
+  - cpanm --quiet Alien::Build::Plugin::Cleanse::BuildDir
+  - cpanm --quiet --notest --installdeps .
   - cpanm --quiet --notest Alien::Build::Plugin::Fetch::Cache
 
   - gcc -v

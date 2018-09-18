@@ -7,7 +7,7 @@ my %common_reqs = (
     "Alien::Build" => "1.41",
     "ExtUtils::MakeMaker" => "6.52",
     "Alien::Build::MM" => "1.41",
-    "Alien::patch" => 0,
+    #"Alien::patch" => 0,
     #"File::Find::Rule" => 0,
     #"parent" => 0,
     "PkgConfig" => 0.19026,
@@ -29,7 +29,6 @@ my %WriteMakefileArgs = (
     },
     "BUILD_REQUIRES" => {
         %common_reqs,
-        Alien::geos,
     },
     "TEST_REQUIRES" => {
         "Test::Alien" => 0,
