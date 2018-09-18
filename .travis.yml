@@ -45,6 +45,10 @@ before_install:
 #  local::lib target is cached
   #  Alien::Build::MM sometimes goes missing
   - cpanm --quiet --notest Alien::Build::MM
+  - cpanm --quiet --notest Sort::Versions
+  - cpanm --quiet --notest PkgConfig
+  - cpanm --quiet --notest Alien::Build::Plugin::Cleanse::BuildDir
+  
   - cpanm --notest local::lib
   - eval "$(perl -Mlocal::lib=${PWD}/perl_modules)"
 
