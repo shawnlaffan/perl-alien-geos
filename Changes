@@ -1,0 +1,101 @@
+Revision history for Alien::gdal
+
+1.10_004 2018-07-30
+    - use Alien::Build::Plugin::Cleanse::BuildDir
+    - add Sort::Versions as a configure and build dependency
+    - add URI::Escape and URI::File as dependencies
+
+1.10_003 2018-05-14
+    - Abbreviate log output under more cpan tester rigs
+    - Minor alienfile cleanups
+
+1.10_002 2018-05-14
+    - Update the alienfile for GDAL 2.3.0
+    - Much of the patching is now version specific to avoid build failures, e.g. on BSD
+    - some tests now also set $ENV{DYLIB_DIR}
+
+1.09 2018-07-05
+    - No further changes from 1.08 dev releases
+
+1.08_002 2018-05-06
+    - Mark the compilation test as to-do until we determine if
+      the failures to find libs are due to us or Alien::Test.
+
+1.08_001 2018-05-06
+    - Dev release, marking more tests as to-do
+
+1.07 2018-05-05
+    - Fallback to PkgConfig to find the share/gdal dir
+    - Use Test::Alien in tests
+    - Add test for utilities, although it is marked as to-do for
+      now due to dynamic lib issues in tests on some platforms
+
+1.05 2018-05-02
+    - Add method to access the share/gdal directory.  This contains the data distributed with gdal.
+    - Turn cpp11 back on, except for bsd cpan testers.
+    - Bump required Alien::Build version to 1.41.
+    - Miscellaneous other changes to address cpan testers failures.
+
+1.04 2018-04-25
+    - Run make clean on cpantesters to reduce number of build artefacts.
+    - See also 1.03_* release notes.  
+
+1.03_010 2018-04-18
+    - Add patch file to manifest.  It is needed on freebsd.
+
+1.03_009 2018-04-17
+    - Disable static build options to reduce build size (it was too big for many cpan testers).
+      Total size should be ~1GB on most systems now.
+
+1.03_008 2018-04-17
+    - disable cpp11 on freebsd to avoid CAD build failures
+
+1.03_007 2018-04-16
+    - patch configure so we generate a shared build on freebsd
+
+1.03_006 2018-04-16
+    - bsd variants use --with-local config arg to ensure /usr/local/include is used
+
+1.03_005 2018-04-14
+    - try to add /usr/local/include to include path on bsd variants
+
+1.03_004 2018-04-13
+    - use internal tiff library to avoid cpan testers fails
+
+1.03_003 2018-04-11
+    - Use plugin for GNU make on bsd variants
+
+1.03_002 2018-04-11
+    - Force use of gmake on freebsd
+
+1.03_001 2018-04-10
+    - Use a dynamic build on all platforms by default
+
+1.03 2018-04-04
+    - Add CI badges
+
+1.02_005 2018-04-02
+    - insensitise OS regexp
+
+1.02_004 2018-04-01
+    - Use correct quotes 
+
+1.02_003 2018-03-31
+    - More cpantesters feedback
+
+1.02_002 2018-03-31
+    - More feedback that might help diagnose cpantesters results
+
+1.02_001 2018-03-29
+    - See if we can truncate the build log for cpan testers, but display it if we get a failure
+    - Reformat the POD a little
+
+1.02 2018-03-28
+    - update changes file for 1.01 changes
+    
+1.01 2018-03-28
+    - add github details to Makefile.PL
+
+1.00 2018-03-28
+    - First release
+

@@ -1,0 +1,69 @@
+language: perl
+perl:
+  - "5.26"
+#  - "5.22"
+
+os:
+  - linux
+  - osx
+
+
+sudo: required 
+
+branches:
+  except:
+  - /appveyor/
+
+cache:
+  directories:
+    - perl_modules
+    - /usr/local
+    - ${HOME}/.alienbuild/plugin_fetch_cache
+
+
+#env:
+#  MAKEFLAGS='-j$(nproc)' - nope - exhausts memory
+
+before_install:
+    # Skip build if the commit message contains [skip travis] or [travis skip]
+    #  (from https://github.com/htgoebel/pyinstaller/blob/develop/.travis.yml)
+  - >
+      echo "$TRAVIS_COMMIT_MESSAGE"
+      | grep -E  '\[(skip travis|travis skip)\]'
+      && echo "[skip travis] has been found, exiting."
+      && exit 0 || true
+
+  - if [ "$TRAVIS_OS_NAME" == "osx" ]; then brew ls --versions perl > /dev/null || brew install perl; fi;
+  - if [ "$TRAVIS_OS_NAME" == "osx" ]; then brew outdated perl || brew upgrade perl; fi;
+  - if [ "$TRAVIS_OS_NAME" == "osx" ]; then brew ls --versions cpanminus > /dev/null || brew install cpanminus; fi;
+  - if [ "$TRAVIS_OS_NAME" == "osx" ]; then brew outdated cpanminus || brew upgrade cpanminus; fi;
+
+#  make sure we get the brewed perl and cpanm etc
+  - if [ "$TRAVIS_OS_NAME" == "osx" ]; then export PATH=/usr/local/bin:${PATH}; fi;
+  - if [ "$TRAVIS_OS_NAME" == "osx" ]; then /usr/local/bin/cpanm --version; fi;
+
+#  local::lib target is cached
+  #  Alien::Build::MM sometimes goes missing
+  - cpanm --quiet --notest Alien::Build::MM
+  - cpanm --notest local::lib
+  - eval "$(perl -Mlocal::lib=${PWD}/perl_modules)"
+
+  - export quiet='--quiet'
+  - cpanm ${quiet} --notest Alien::Build::Plugin::Fetch::Cache
+  - cpanm ${quiet} --notest --installdeps .
+  - cpanm Alien::Build::Plugin::Cleanse::BuildDir
+  
+
+script:
+  #- export AUTOMATED_TESTING=1  #  for debug
+  - export ALIEN_BUILD_PRELOAD=Fetch::Cache
+  - perl Makefile.PL
+  #- make | perl -ne 'BEGIN {$|=1; open our $log, ">", "build.log"}; print "\n" if 0 == ($. % 90); print "."; print {$log} $_;' || cat build.log
+  - make
+  #- tail -200 build.log
+  #- make
+  - make test
+  #  minor debug
+  - perl -Iblib/lib -Iblib/arch -MAlien::gdal -E 'say $ENV{PATH}'
+  #  disable for now - osx builds hit issues
+  #- [ "$TRAVIS_OS_NAME" != "osx" ] && cat blib/lib/auto/share/dist/Alien-gdal/lib/pkgconfig/gdal.pc
