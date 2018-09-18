@@ -21,6 +21,7 @@ install:
   - cpanm --quiet --notest Alien::Build::MM
   - cpanm --quiet --notest Sort::Versions
   - cpanm --quiet --notest PkgConfig
+  - cpanm --quiet Alien::Build::Plugin::Cleanse::BuildDir
   - cpanm -v --notest --installdeps .
   - cpanm --quiet --notest Alien::Build::Plugin::Fetch::Cache
 
