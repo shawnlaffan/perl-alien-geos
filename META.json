@@ -1,10 +1,10 @@
 {
-   "abstract" : "Alien package for the Geospatial Data Abstraction Library (GDAL)",
+   "abstract" : "Alien package for GEOS - Geometry Engine, Open Source",
    "author" : [
       "Shawn Laffan <shawnlaffan@gmail.com>"
    ],
    "dynamic_config" : 1,
-   "generated_by" : "ExtUtils::MakeMaker version 7.3, CPAN::Meta::Converter version 2.150010",
+   "generated_by" : "ExtUtils::MakeMaker version 7.34, CPAN::Meta::Converter version 2.150010",
    "license" : [
       "perl_5"
    ],
@@ -12,7 +12,7 @@
       "url" : "http://search.cpan.org/perldoc?CPAN::Meta::Spec",
       "version" : 2
    },
-   "name" : "Alien-gdal",
+   "name" : "Alien-geos",
    "no_index" : {
       "directory" : [
          "t",
@@ -26,18 +26,16 @@
             "Alien::Build::MM" : "1.41",
             "Alien::Build::Plugin::Cleanse::BuildDir" : "0",
             "Alien::MSYS" : "0.07",
-            "Alien::patch" : "0",
             "Archive::Tar" : "0",
             "ExtUtils::MakeMaker" : "6.52",
-            "File::Find::Rule" : "0",
             "HTML::LinkExtor" : "0",
             "HTTP::Tiny" : "0.044",
-            "IO::Zlib" : "0",
+            "IO::Compress::Bzip2" : "0",
+            "IO::Uncompress::Bunzip2" : "0",
             "PkgConfig" : "0.19026",
             "Sort::Versions" : "0",
             "URI" : "0",
-            "URI::Escape" : "0",
-            "parent" : "0"
+            "URI::Escape" : "0"
          }
       },
       "configure" : {
@@ -46,13 +44,9 @@
             "Alien::Build::MM" : "1.41",
             "Alien::Build::Plugin::Cleanse::BuildDir" : "0",
             "Alien::MSYS" : "0",
-            "Alien::patch" : "0",
             "ExtUtils::MakeMaker" : "6.52",
-            "File::Find::Rule" : "0",
-            "HTTP::Tiny" : "0.044",
             "PkgConfig" : "0",
-            "Sort::Versions" : "0",
-            "parent" : "0"
+            "Sort::Versions" : "0"
          }
       },
       "runtime" : {
@@ -70,23 +64,24 @@
    "release_status" : "unstable",
    "resources" : {
       "bugtracker" : {
-         "web" : "https://github.com/shawnlaffan/perl-alien-gdal/issues/"
+         "web" : "https://github.com/shawnlaffan/perl-alien-geos/issues/"
       },
       "repository" : {
          "type" : "git",
-         "url" : "https://github.com/shawnlaffan/perl-alien-gdal"
+         "url" : "https://github.com/shawnlaffan/perl-alien-geos"
       }
    },
-   "version" : "1.10_003",
+   "version" : "1.000_001",
    "x_alienfile" : {
-      "generated_by" : "Alien::Build::MM version 1.43",
+      "generated_by" : "Alien::Build::MM version 1.48",
       "requires" : {
          "share" : {
             "Alien::MSYS" : "0.07",
             "Archive::Tar" : "0",
             "HTML::LinkExtor" : "0",
             "HTTP::Tiny" : "0.044",
-            "IO::Zlib" : "0",
+            "IO::Compress::Bzip2" : "0",
+            "IO::Uncompress::Bunzip2" : "0",
             "Sort::Versions" : "0",
             "URI" : "0",
             "URI::Escape" : "0"
@@ -94,5 +89,5 @@
          "system" : {}
       }
    },
-   "x_serialization_backend" : "JSON::PP version 2.94"
+   "x_serialization_backend" : "JSON::PP version 2.97001"
 }
