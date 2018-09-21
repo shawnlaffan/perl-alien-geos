@@ -21,8 +21,8 @@ Alien::geos - Compile GEOS, the Geometry Engine, Open Source
  
 <p>
     <img src="https://img.shields.io/badge/perl-5.10+-blue.svg" alt="Requires Perl 5.10+" />
-    <a href="https://travis-ci.org/shawnlaffan/perl-alien-gdal"><img src="https://travis-ci.org/shawnlaffan/perl-alien-gdal.svg?branch=master" /></a>
-    <a href="https://ci.appveyor.com/project/shawnlaffan/perl-alien-gdal"><img src="https://ci.appveyor.com/api/projects/status/1tqk5rd40cv2ve8q?svg=true" /></a>
+    <a href="https://travis-ci.org/shawnlaffan/perl-alien-geos"><img src="https://travis-ci.org/shawnlaffan/perl-alien-geos.svg?branch=master" /></a>
+    <a href="https://ci.appveyor.com/project/shawnlaffan/perl-alien-geos"><img src="https://ci.appveyor.com/api/projects/status/1tqk5rd40cv2ve8q?svg=true" /></a>
 </p>
 
 =end HTML
