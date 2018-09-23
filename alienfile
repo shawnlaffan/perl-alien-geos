@@ -15,12 +15,10 @@ my $base_dir = getcwd();
 
 my $min_target_version = '3.6.0';
 
-#plugin 'PkgConfig' => (
-#    pkg_name => 'geos',
-#    minimum_version => $min_target_version,
 
 probe [ 'geos-config --version' ];
 
+system 'which geos-config -a';
 
 share {
 
@@ -93,19 +91,15 @@ share {
 
 };
 
-#  TO DO
-gather [
-    \&remove_la_files,
-];
-#  # standard:
-#  [ 'foo-config --version libfoo', \'%{.runtime.version}' ],
-#  [ 'foo-config --cflags  libfoo', \'%{.runtime.cflags}'  ],
-#  [ 'foo-config --libs    libfoo', \'%{.runtime.libs}'    ],
-#  # non-standard
-#  [ 'foo-config --bar-baz libfoo', \'%{.runtime.bar_baz}' ],
-#];
 
-sub remove_la_files {
+gather [
+    \&rename_la_files,
+    #[ 'geos-config --version', \'%{.runtime.version}' ],
+    #[ 'geos-config --cflags',  \'%{.runtime.cflags}'  ],
+    #[ 'geos-config --libs',    \'%{.runtime.libs}'    ],
+];
+
+sub rename_la_files {
     return if !$on_windows;
     
     use File::Find::Rule;
