@@ -9,9 +9,9 @@ alien_ok 'Alien::geos';
 
 diag ('libs: '   . Alien::geos->libs // '');
 diag ('cflags: ' . Alien::geos->cflags // '');
-diag ('Dynamic libs: ' . join ':', Alien::geos->dynamic_libs);
-diag ('bin dir: ' . Alien::geos->bin_dir);
-my $bin = Alien::geos->bin_dir;
+diag ('Dynamic libs: ' . join ':', Alien::geos->dynamic_libs // ());
+diag ('bin dir: ' . Alien::geos->bin_dir // '');
+my $bin = Alien::geos->bin_dir // '';
 
 #  nasty hack
 $ENV{LD_LIBRARY_PATH}   = Alien::geos->dist_dir . '/lib';
