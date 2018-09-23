@@ -15,6 +15,8 @@ my $base_dir = getcwd();
 
 my $min_target_version = '3.6.0';
 
+plugin 'Build::MSYS';
+
 probe sub {
     my($build) = @_;  # $build is the Alien::Build instance.
     my $version = `geos-config --version`;
@@ -119,6 +121,9 @@ sub set_runtime_props_from_config {
         $ENV{PATH} .= ';' . Alien::MSYS->msys_path;
         say $ENV{PATH};
         $bin_sh = Alien::MSYS->msys_path . '/sh';
+    }
+    else {
+        $bin_sh = `which sh`;
     }
     foreach my $flag (qw /cflags libs
                           clibs cclibs
