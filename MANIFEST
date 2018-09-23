@@ -9,7 +9,6 @@ META.json
 META.yml
 README.md
 t/00-load.t
-t/01-config.t
 t/02-use.t
 t/src/test.c
 xt/01-has_versions.t
