@@ -32,7 +32,7 @@ probe sub {
 };
 
 
-system 'which geos-config -a';
+#system 'which geos-config -a';
 
 share {
 
