@@ -2,15 +2,24 @@ use 5.010;
 use alienfile;
 use Sort::Versions;
 
+my $on_windows = ($^O =~ /mswin/i);
+my $on_automated_rig
+  =  $ENV{PERL_CPAN_REPORTER_DIR}
+  || $ENV{PERL_CPAN_REPORTER_CONFIG}
+  || $ENV{AUTOMATED_TESTING}
+  || $ENV{TRAVIS}
+  || $ENV{APPVEYOR};
+
 use Cwd;
 my $base_dir = getcwd();
 
 my $min_target_version = '3.6.0';
 
-plugin 'PkgConfig' => (
-    pkg_name => 'geos',
-    minimum_version => $min_target_version,
-);
+#plugin 'PkgConfig' => (
+#    pkg_name => 'geos',
+#    minimum_version => $min_target_version,
+
+probe [ 'geos-config --version' ];
 
 
 share {
@@ -77,13 +86,49 @@ share {
   build [
     "%{configure} $with_local $with_cpp11 $build_static",
     $make_cmd,
+    \&pause,
+    \&remove_la_files,
     $make_inst_cmd,
     @make_clean
   ];
 
 };
 
+#  TO DO
+#gather [
+#  # standard:
+#  [ 'foo-config --version libfoo', \'%{.runtime.version}' ],
+#  [ 'foo-config --cflags  libfoo', \'%{.runtime.cflags}'  ],
+#  [ 'foo-config --libs    libfoo', \'%{.runtime.libs}'    ],
+#  # non-standard
+#  [ 'foo-config --bar-baz libfoo', \'%{.runtime.bar_baz}' ],
+#];
 
+sub remove_la_files {
+    return if !$on_windows;
+    
+    use File::Find::Rule;
+    my @la_files
+      = File::Find::Rule->file()
+                        ->name( '*.la' )
+                        ->in( '.' );
+    foreach my $file (@la_files) {
+        say "Renaming $file so it will not intefere with gdal compilation";
+        rename $file, $file . '.bak';
+    }
+
+}
+
+sub pause {
+    return;  #  disable
+    return if !$on_windows || $on_automated_rig;
+
+    say "CONTINUE?";
+    my $response = <>;
+    while (not $response =~ /yes/) {
+        $response = <>;
+    }
+}
 
 sub get_geos_version {
     my $h = get_alien_state_hash();
