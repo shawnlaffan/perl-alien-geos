@@ -35,7 +35,8 @@
             "PkgConfig" : "0.19026",
             "Sort::Versions" : "0",
             "URI" : "0",
-            "URI::Escape" : "0"
+            "URI::Escape" : "0",
+            "File::Find::Rule": '0'
          }
       },
       "configure" : {
