@@ -63,11 +63,11 @@ share {
   my $make_inst_cmd = '%{make} install';
   my @make_clean;
   #  try not to exceed the cpan-testers log limits
-  if ($ENV{PERL_CPAN_REPORTER_DIR} || $ENV{PERL_CPAN_REPORTER_CONFIG} || $ENV{AUTOMATED_TESTING} || $ENV{TRAVIS} || $ENV{APPVEYOR}) {
+  if ($on_automated_rig) {
     say "Running under CI or automated testing";
     $make_cmd      .= q/ | perl -ne "BEGIN {$|=1; open our $log, q|>|, q|build.log|};   print qq|\n| if 0 == ($. %% 100); print q|.|; print {$log} $_;" || type build.log/;
     $make_inst_cmd .= q/ | perl -ne "BEGIN {$|=1; open our $log, q|>|, q|install.log|}; print qq|\n| if 0 == ($. %% 100); print q|.|; print {$log} $_;" || type install.log/;
-    if (not $^O =~ /mswin/i) {
+    if (!$on_windows) {
         $make_cmd =~ s/%%/%/;
         $make_cmd =~ s/type/cat/;
         $make_cmd =~ s/"/'/g;
@@ -87,7 +87,6 @@ share {
     "%{configure} $with_local $with_cpp11 $build_static",
     $make_cmd,
     \&pause,
-    \&remove_la_files,
     $make_inst_cmd,
     @make_clean
   ];
@@ -95,7 +94,9 @@ share {
 };
 
 #  TO DO
-#gather [
+gather [
+    \&remove_la_files,
+];
 #  # standard:
 #  [ 'foo-config --version libfoo', \'%{.runtime.version}' ],
 #  [ 'foo-config --cflags  libfoo', \'%{.runtime.cflags}'  ],
@@ -133,6 +134,11 @@ sub pause {
 sub get_geos_version {
     my $h = get_alien_state_hash();
     return $h->{runtime}{version};
+}
+
+sub get_stage_dir {
+    my $h = get_alien_state_hash();
+    return $h->{install}{stage};
 }
 
 sub get_alien_state_hash {
