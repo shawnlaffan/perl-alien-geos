@@ -135,6 +135,7 @@ sub set_runtime_props_from_config {
                           ldflags includes
                           static-clibs static-cclibs/) {
         $build->runtime_prop->{$flag} = `$bin_sh $geos_config --$flag`;
+        $build->runtime_prop->{$flag} =~ s/[\r\n]+$//;  #  generic chomp
     }
 }
 
