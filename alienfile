@@ -16,7 +16,21 @@ my $base_dir = getcwd();
 my $min_target_version = '3.6.0';
 
 
-probe [ 'geos-config --version' ];
+#probe [ 'geos-config --version' ];
+#plugin 'Probe::CommandLine' => (
+#  command => 'geos-config',
+#  args    => [ '--version' ],
+#  #match   => qr//,
+#  version => qr/([0-9\.]+)/,
+#);
+probe sub {
+    my($build) = @_;  # $build is the Alien::Build instance.
+    my $version = `geos-config --version`;
+    $? == 0 && (versioncmp ($version, $min_target_version) == 1)
+      ? 'system'
+      : 'share';
+};
+
 
 system 'which geos-config -a';
 
