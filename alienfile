@@ -119,16 +119,17 @@ sub set_runtime_props_from_config {
                 ->in( '.' )
           : 'geos-config';
     
-    my $bin_sh = '/bin/sh';
-    if ($on_windows) {
-        require Alien::MSYS ;
-        $ENV{PATH} .= ';' . Alien::MSYS->msys_path;
-        say $ENV{PATH};
-        $bin_sh = Alien::MSYS->msys_path . '/sh';
-    }
-    else {
-        $bin_sh = `which sh`;
-    }
+    my $bin_sh = 'sh';
+    #if ($on_windows) {
+    #    require Alien::MSYS ;
+    #    $ENV{PATH} .= ';' . Alien::MSYS->msys_path;
+    #    say $ENV{PATH};
+    #    $bin_sh = Alien::MSYS->msys_path . '/sh';
+    #}
+    #else {
+    #    $bin_sh = `which sh`;
+    #}
+    
     foreach my $flag (qw /cflags libs
                           clibs cclibs
                           ldflags includes
