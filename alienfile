@@ -20,9 +20,13 @@ plugin 'Build::MSYS';
 probe sub {
     my($build) = @_;  # $build is the Alien::Build instance.
     my $version = `geos-config --version`;
-    $? == 0 && (versioncmp ($version, $min_target_version) == 1)
+    my $build_type
+      = $? == 0
+      && (versioncmp ($version, $min_target_version) == 1)
       ? 'system'
       : 'share';
+    say "Build type is $build_type, found version " . ($version // 'n/a');
+    return $build_type;
 };
 
 
@@ -45,7 +49,7 @@ share {
 
   plugin 'Build::Autoconf' => ();
 
-  my $build_static = ($^O =~ /mswin/i) ? '' : '--disable-shared';
+  my $build_static = ($on_windows) ? '' : '--disable-shared';
   $build_static = '';
   $build_static = '--enable-static=no';  #  override - HUGE files if static
   #$build_static = '' if $ENV{FORCE_DYNAMIC};
