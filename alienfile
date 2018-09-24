@@ -110,32 +110,36 @@ gather [
 
 sub set_runtime_props_from_config {
     my ($build) = @_;
+    
+    say 'set_runtime_props_from_config: Currently in ' . getcwd();
     use File::Find::Rule;
-    my $geos_config
+    my ($geos_config)
       = $build->install_type eq 'share'
           ? File::Find::Rule
                 ->file()
                 ->name( 'geos-config' )
-                ->in( '.' )
+                ->in( $base_dir )
           : 'geos-config';
     
     my $bin_sh = 'sh';
-    #if ($on_windows) {
-    #    require Alien::MSYS ;
-    #    $ENV{PATH} .= ';' . Alien::MSYS->msys_path;
-    #    say $ENV{PATH};
-    #    $bin_sh = Alien::MSYS->msys_path . '/sh';
-    #}
-    #else {
-    #    $bin_sh = `which sh`;
-    #}
+    if ($on_windows) {
+        require Alien::MSYS ;
+        $ENV{PATH} .= ';' . Alien::MSYS->msys_path;
+        say $ENV{PATH};
+        $bin_sh = Alien::MSYS->msys_path . '/sh';
+    }
+    else {
+        $bin_sh = `which sh`;
+    }
     
     foreach my $flag (qw /cflags libs
                           clibs cclibs
                           ldflags includes
                           static-clibs static-cclibs/) {
+        say "Calling: $bin_sh $geos_config --$flag";
         $build->runtime_prop->{$flag} = `$bin_sh $geos_config --$flag`;
         $build->runtime_prop->{$flag} =~ s/[\r\n]+$//;  #  generic chomp
+        say "Runtime prop $flag is $build->runtime_prop->{$flag}";
     }
 }
 
