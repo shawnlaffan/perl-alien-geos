@@ -139,7 +139,7 @@ sub set_runtime_props_from_config {
         say "Calling: $bin_sh $geos_config --$flag";
         $build->runtime_prop->{$flag} = `$bin_sh $geos_config --$flag`;
         $build->runtime_prop->{$flag} =~ s/[\r\n]+$//;  #  generic chomp
-        say "Runtime prop $flag is $build->runtime_prop->{$flag}";
+        say "Runtime prop $flag is " . $build->runtime_prop->{$flag};
     }
 }
 
