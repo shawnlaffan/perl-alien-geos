@@ -139,6 +139,10 @@ sub set_runtime_props_from_config {
         say "Calling: $bin_sh $geos_config --$flag";
         $build->runtime_prop->{$flag} = `$bin_sh $geos_config --$flag`;
         $build->runtime_prop->{$flag} =~ s/[\r\n]+$//;  #  generic chomp
+        if ($on_windows) {
+            #  windowsify the paths
+            $build->runtime_prop->{$flag} =~ s|(?<=-[IL])/C/|C:/|i;
+        }
         say "Runtime prop $flag is " . $build->runtime_prop->{$flag};
     }
 }
