@@ -9,7 +9,7 @@ META.json
 META.yml
 README.md
 t/00-load.t
-t/02-use.t
+t/01-compile.t
 t/src/test.c
 xt/01-has_versions.t
 xt/03-has_pod.t
