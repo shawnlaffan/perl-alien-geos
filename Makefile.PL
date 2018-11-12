@@ -20,8 +20,8 @@ my %common_reqs = (
 my %WriteMakefileArgs = (
     "ABSTRACT" => "Alien package for GEOS - Geometry Engine, Open Source",
     "AUTHOR"   => 'Shawn Laffan <shawnlaffan@gmail.com>',
-    "NAME"     => "Alien::geos",
-    "VERSION_FROM" => "lib/Alien/geos.pm",
+    "NAME"     => "Alien::geos::af",
+    "VERSION_FROM" => "lib/Alien/geos/af.pm",
     "CONFIGURE_REQUIRES" => {
         %common_reqs,
         "PkgConfig"  => 0,
@@ -49,7 +49,7 @@ my %WriteMakefileArgs = (
             },
         },
     },
-    "DISTNAME" => "Alien-geos",
+    "DISTNAME" => "Alien-geos-af",
     "LICENSE"  => "perl",
 );
 
