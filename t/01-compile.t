@@ -3,19 +3,19 @@ use warnings;
 use Test::More;
 #use Config;
 use Test::Alien;
-use Alien::geos;
+use Alien::geos::af;
 
-alien_ok 'Alien::geos';
+alien_ok 'Alien::geos::af';
 
-diag ('libs: '   . Alien::geos->libs // '');
-diag ('cflags: ' . Alien::geos->cflags // '');
-#diag ('Dynamic libs: ' . join ':', Alien::geos->dynamic_libs // ());
-#diag ('bin dir: ' . Alien::geos->bin_dir // '');
-#my $bin = Alien::geos->bin_dir // '';
+diag ('libs: '   . Alien::geos::af->libs // '');
+diag ('cflags: ' . Alien::geos::af->cflags // '');
+#diag ('Dynamic libs: ' . join ':', Alien::geos::af->dynamic_libs // ());
+#diag ('bin dir: ' . Alien::geos::af->bin_dir // '');
+#my $bin = Alien::geos::af->bin_dir // '';
 
 #  nasty hack
-$ENV{LD_LIBRARY_PATH}   = Alien::geos->dist_dir . '/lib';
-$ENV{DYLD_LIBRARY_PATH} = Alien::geos->dist_dir . '/lib';
+$ENV{LD_LIBRARY_PATH}   = Alien::geos::af->dist_dir . '/lib';
+$ENV{DYLD_LIBRARY_PATH} = Alien::geos::af->dist_dir . '/lib';
 
 
 TODO: {

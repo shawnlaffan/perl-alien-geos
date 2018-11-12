@@ -1,4 +1,4 @@
-package Alien::geos;
+package Alien::geos::af;
 
 use strict;
 use warnings;
@@ -13,7 +13,7 @@ __END__
 
 =head1 NAME
 
-Alien::geos - Compile GEOS, the Geometry Engine, Open Source
+Alien::geos::af - Compile GEOS, the Geometry Engine, Open Source
 
 =head1 BUILD STATUS
  
@@ -29,17 +29,21 @@ Alien::geos - Compile GEOS, the Geometry Engine, Open Source
 
 =head1 SYNOPSIS
 
-    use Alien::geos;
+    use Alien::geos::af;
 
     use Env qw(@PATH);
-    unshift @PATH, Alien::geos->bin_dir;
+    unshift @PATH, Alien::geos::af->bin_dir;
 
-    print Alien::geos->dist_dir;
+    print Alien::geos::af->dist_dir;
 
     
 =head1 DESCRIPTION
 
 GEOS is the Geometry Engine, Open Source.  See L<http://geos.osgeo.org/>.
+
+The name is chosen to not clash with a pre-existing Alien::GEOS distribution.
+This package differs in that it uses the alienfile approach, hence the ::af
+suffix in the name.  
 
 
 =head1 REPORTING BUGS
@@ -52,6 +56,8 @@ L<https://github.com/shawnlaffan/perl-alien-geos/issues>.
 L<Geo::GDAL>
 
 L<Geo::GDAL::FFI>
+
+L<Alien::gdal>
 
 =head1 AUTHORS
 

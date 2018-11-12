@@ -4,15 +4,15 @@ use Test::More;
 use Test::Alien;
 
 BEGIN {
-    use_ok('Alien::geos') or BAIL_OUT('Failed to load Alien::gdal');
+    use_ok('Alien::geos::af') or BAIL_OUT('Failed to load Alien::geos::af');
 }
 
-alien_ok 'Alien::geos';
+alien_ok 'Alien::geos::af';
 
 diag(
     sprintf(
-        'Testing Alien::geos %s, Perl %s, %s',
-        $Alien::geos::VERSION, $], $^X
+        'Testing Alien::geos::af %s, Perl %s, %s',
+        $Alien::geos::af::VERSION, $], $^X
     )
 );
 
