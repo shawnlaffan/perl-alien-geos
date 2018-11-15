@@ -76,7 +76,7 @@ script:
   #- perl -Iblib/lib -Iblib/arch -MAlien::geos::af -E 'say $ENV{PATH}'
 
   - echo "==="
-  - perl -Iblib/lib -Iblib/arch -MAlien::geos::af -E 'my @x = eval {Alien::geos::af->dynamic_libs}; say $@ if $@; say join ":", @x'
+  - perl -Iblib/lib -Iblib/arch -MAlien::geos::af -E 'my @x = eval {Alien::geos::af->dynamic_libs}; say $@ if $@; say join " ", @x'
   - echo "==="
   
   - echo Dumping alien.json file
