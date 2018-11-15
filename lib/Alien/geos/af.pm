@@ -4,9 +4,9 @@ use strict;
 use warnings;
 use parent qw( Alien::Base );
 
-our $VERSION = '1.003';
+our $VERSION = '1.004';
 
-
+#  make sure we find geos and geos_c
 sub dynamic_libs {
     my ($class) = @_;
 
@@ -23,22 +23,19 @@ sub dynamic_libs {
         return wantarray ? @libs : $libs[0];
     }
     else {
-        #  should just send shared to SUPER::dynamic_libs
-        #  as the code is the same
-
         my $dir = $class->dist_dir;
         my $dynamic = Path::Tiny->new($class->dist_dir, 'dynamic');
       
         if(-d $dynamic) {
             return FFI::CheckLib::find_lib(
-                lib        => '*',
+                lib        => ['geos', 'geos_c'],
                 libpath    => "$dynamic",
                 systempath => [],
             );
         }
         
         return FFI::CheckLib::find_lib(
-            lib        => '*',
+            lib        => ['geos', 'geos_c'],
             libpath    => $dir,
             systempath => [],
             recursive  => 1,
