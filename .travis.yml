@@ -54,6 +54,7 @@ before_install:
   - cpanm --quiet --notest PkgConfig
   - cpanm --quiet --notest File::Find::Rule
   #- cpanm --quiet --notest Alien::Build::Plugin::Build::MSYS
+  - cpanm --quiet --notest HTML::LinkExtor
 
   - cpanm --quiet --notest Alien::Build::Plugin::Cleanse::BuildDir
   - cpanm --quiet --notest Alien::Build::Plugin::Fetch::Cache
