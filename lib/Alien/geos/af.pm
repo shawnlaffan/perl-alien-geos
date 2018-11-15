@@ -24,14 +24,10 @@ sub dynamic_libs {
     }
     else {
         my $dir = $class->dist_dir;
+
         my $dynamic = Path::Tiny->new($class->dist_dir, 'dynamic');
-      
-        if(-d $dynamic) {
-            return FFI::CheckLib::find_lib(
-                lib        => ['geos', 'geos_c'],
-                libpath    => "$dynamic",
-                systempath => [],
-            );
+        if (-d $dynamic) {
+            $dir = $dynamic;
         }
         
         my @libs;
