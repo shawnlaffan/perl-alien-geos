@@ -34,12 +34,20 @@ sub dynamic_libs {
             );
         }
         
-        return FFI::CheckLib::find_lib(
-            lib        => ['geos', 'geos_c'],
+        my @libs;
+        push @libs, FFI::CheckLib::find_lib(
+            lib        => 'geos',
             libpath    => $dir,
             systempath => [],
             recursive  => 1,
         );
+        push @libs, FFI::CheckLib::find_lib(
+            lib        => 'geos_c',
+            libpath    => $dir,
+            systempath => [],
+            recursive  => 1,
+        );
+        return wantarray ? @libs : $libs[0];
     }
 }
 
