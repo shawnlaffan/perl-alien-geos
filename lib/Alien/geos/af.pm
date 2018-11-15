@@ -13,7 +13,10 @@ sub dynamic_libs {
     require FFI::CheckLib;
   
     if ($class->install_type('system')) {
-        return FFI::CheckLib::find_lib(lib => 'geos');
+        return FFI::CheckLib::find_lib(
+            lib       => 'geos',
+            recursive => 1,
+        );
     }
     else {
     
