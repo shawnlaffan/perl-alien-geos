@@ -43,6 +43,8 @@ before_install:
   - if [ "$TRAVIS_OS_NAME" == "osx" ]; then /usr/local/bin/cpanm --version; fi;
 
 #  local::lib target is cached
+  #  get latest Alien::Build
+  - cpanm --quiet --notest Alien::Build
   #  Alien::Build::MM sometimes goes missing
   - cpanm --quiet --notest Alien::Build::MM
   - cpanm --quiet --notest Sort::Versions
