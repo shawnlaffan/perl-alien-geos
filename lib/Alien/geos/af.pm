@@ -4,7 +4,7 @@ use strict;
 use warnings;
 use parent qw( Alien::Base );
 
-our $VERSION = '1.002';
+our $VERSION = '1.003';
 
 
 sub dynamic_libs {
