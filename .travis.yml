@@ -73,6 +73,8 @@ script:
   #- make
   - make test
   #  minor debug
-  - perl -Iblib/lib -Iblib/arch -MAlien::geos::af -E 'say $ENV{PATH}'
-  #  disable for now - osx builds hit issues
-  #- [ "$TRAVIS_OS_NAME" != "osx" ] && cat blib/lib/auto/share/dist/Alien-gdal/lib/pkgconfig/gdal.pc
+  #- perl -Iblib/lib -Iblib/arch -MAlien::geos::af -E 'say $ENV{PATH}'
+
+  - echo "==="
+  - perl -Iblib/lib -Iblib/arch -MAlien::geos::af -E 'my @x = eval {Alien::geos::af->dynamic_libs}; say $@ if $@; say join ":", @x'
+  - echo "==="
