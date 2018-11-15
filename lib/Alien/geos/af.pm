@@ -36,7 +36,10 @@ sub dynamic_libs {
             #  until FFI::CheckLib::find_lib handles names like geos-3-7-0.dll 
             my $dh;
             opendir $dh, "$dir/bin" or die "Unable to open dir handle for $dir/bin";
-            my @dlls = grep {/geos.+\.dll$/} readdir $dh;
+            my @dlls
+              = map {"$dir/$_"}
+                grep {/geos.+\.dll$/}
+                readdir $dh;
             push @libs, @dlls;
             $dh->close;
         }
@@ -48,7 +51,7 @@ sub dynamic_libs {
                 recursive  => 1,
             );
         }
-        warn "FOUND LIBS: " . join (':', @libs);
+        #warn "FOUND LIBS: " . join (':', @libs);
         return wantarray ? @libs : $libs[0];
     }
 }
