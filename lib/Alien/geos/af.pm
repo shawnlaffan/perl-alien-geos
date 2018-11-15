@@ -43,6 +43,7 @@ sub dynamic_libs {
             systempath => [],
             recursive  => 1,
         );
+        warn "FOUND LIBS: " . join (':', @libs);
         return wantarray ? @libs : $libs[0];
     }
 }

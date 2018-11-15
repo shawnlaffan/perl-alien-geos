@@ -36,4 +36,8 @@ build_script:
   - gmake test
   #  some feedback
   #- type blib\lib\auto\share\dist\Alien-gdal\lib\pkgconfig\gdal.pc
+  - echo "==="
+  - perl -Iblib/lib -Iblib/arch -MAlien::geos::af -E "my @x = eval {Alien::geos::af->dynamic_libs}; say $@ if $@; say join { }, @x"
+  - echo "==="
+
 
