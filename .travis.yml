@@ -16,7 +16,7 @@ branches:
 
 cache:
   directories:
-    - perl_modules
+    - ${HOME}/perl_modules
     - /usr/local
     - ${HOME}/.alienbuild/plugin_fetch_cache
 
@@ -43,6 +43,9 @@ before_install:
   - if [ "$TRAVIS_OS_NAME" == "osx" ]; then /usr/local/bin/cpanm --version; fi;
 
 #  local::lib target is cached
+  - cpanm --notest local::lib
+  - eval "$(perl -Mlocal::lib=${HOME}/perl_modules)"
+  
   #  get latest Alien::Build
   - cpanm --quiet --notest Alien::Build
   #  Alien::Build::MM sometimes goes missing
@@ -51,14 +54,11 @@ before_install:
   - cpanm --quiet --notest PkgConfig
   - cpanm --quiet --notest File::Find::Rule
   #- cpanm --quiet --notest Alien::Build::Plugin::Build::MSYS
-  
-  - cpanm --notest local::lib
-  - eval "$(perl -Mlocal::lib=${PWD}/perl_modules)"
 
-  - cpanm Alien::Build::Plugin::Cleanse::BuildDir
+  - cpanm --quiet --notest Alien::Build::Plugin::Cleanse::BuildDir
+  - cpanm --quiet --notest Alien::Build::Plugin::Fetch::Cache
   
   - export quiet='--verbose'
-  - cpanm ${quiet} --notest Alien::Build::Plugin::Fetch::Cache
   - cpanm ${quiet} --notest --installdeps .
   
 
