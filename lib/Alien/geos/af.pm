@@ -7,6 +7,45 @@ use parent qw( Alien::Base );
 our $VERSION = '1.002';
 
 
+sub dynamic_libs {
+    my ($class) = @_;
+
+    require FFI::CheckLib;
+
+    if ($class->install_type('system')) {
+        my @libs;
+        push @libs, FFI::CheckLib::find_lib(
+            lib => 'geos',
+        );
+        push @libs, FFI::CheckLib::find_lib(
+            lib => 'geos_c',
+        );
+        return wantarray ? @libs : $libs[0];
+    }
+    else {
+        #  should just send shared to SUPER::dynamic_libs
+        #  as the code is the same
+
+        my $dir = $class->dist_dir;
+        my $dynamic = Path::Tiny->new($class->dist_dir, 'dynamic');
+      
+        if(-d $dynamic) {
+            return FFI::CheckLib::find_lib(
+                lib        => '*',
+                libpath    => "$dynamic",
+                systempath => [],
+            );
+        }
+        
+        return FFI::CheckLib::find_lib(
+            lib        => '*',
+            libpath    => $dir,
+            systempath => [],
+            recursive  => 1,
+        );
+    }
+}
+
 1;
 
 __END__
