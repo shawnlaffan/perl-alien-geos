@@ -9,16 +9,16 @@ our $VERSION = '1.002';
 
 sub dynamic_libs {
     my ($class) = @_;
-  
+
     require FFI::CheckLib;
-  
+
     if ($class->install_type('system')) {
         my @libs;
         push @libs, FFI::CheckLib::find_lib(
-            lib       => 'geos',
+            lib => 'geos',
         );
         push @libs, FFI::CheckLib::find_lib(
-            lib       => 'geos_c',
+            lib => 'geos_c',
         );
         return wantarray ? @libs : $libs[0];
     }

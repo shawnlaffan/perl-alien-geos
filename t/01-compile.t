@@ -10,7 +10,7 @@ alien_ok 'Alien::geos::af';
 diag ('libs: '   . Alien::geos::af->libs // '');
 diag ('cflags: ' . Alien::geos::af->cflags // '');
 eval {
-    diag ('Dynamic libs: ' . join ':', Alien::geos::af->dynamic_libs // ());
+    diag ('Dynamic libs: ' . join (':', Alien::geos::af->dynamic_libs));
 };
 warn $@ if $@;
 
