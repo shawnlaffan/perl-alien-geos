@@ -1,5 +1,8 @@
 Revision history for Alien::geos::af
 
+1.006 2018-XX-XX
+    - Require FFI::CheckLib 0.23 so dynamic_libs calls find geos-3-7-0.dll
+
 1.005 2018-11-15
     - More updates to the dynamic_libs method to find
       geos and geos_c libs for shared installs on windows
