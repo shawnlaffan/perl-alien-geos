@@ -10,7 +10,7 @@ our $VERSION = '1.005';
 sub dynamic_libs {
     my ($class) = @_;
 
-    require FFI::CheckLib;
+    use FFI::CheckLib 0.23 ();
 
     if ($class->install_type('system')) {
         my @libs;
@@ -31,7 +31,7 @@ sub dynamic_libs {
         }
         
         my @libs;
-        if ($^O =~ /mswin/i) {
+        if (0 and $^O =~ /mswin/i) {
             #warn "Checking $dir\n";
             #  until FFI::CheckLib::find_lib handles names like geos-3-7-0.dll 
             my $dh;
@@ -51,7 +51,7 @@ sub dynamic_libs {
                 recursive  => 1,
             );
         }
-        #warn "FOUND LIBS: " . join (':', @libs);
+        warn "FOUND LIBS: " . join (':', @libs);
         return wantarray ? @libs : $libs[0];
     }
 }
