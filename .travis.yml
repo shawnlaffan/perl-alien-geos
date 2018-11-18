@@ -18,6 +18,7 @@ cache:
   directories:
     - ${HOME}/perl_modules
     - ${HOME}/.alienbuild/plugin_fetch_cache
+    - ${HOME}/Library/Caches/Homebrew
     #- /usr/local
 
 
