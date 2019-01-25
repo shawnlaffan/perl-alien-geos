@@ -164,7 +164,7 @@ sub rename_la_files {
 }
 
 sub pause {
-    return;  #  disable
+    #return;  #  disable
     return if !$on_windows || $on_automated_rig;
 
     say "CONTINUE?";
