@@ -96,14 +96,14 @@ share {
     $make_cmd,
     \&pause,
     $make_inst_cmd,
-    @make_clean
+    @make_clean,
+    \&rename_la_files,
   ];
 
 };
 
 
 gather [
-    \&rename_la_files,
     #  get all the geos-config fields
     \&set_runtime_props_from_config,
 ];
@@ -157,7 +157,7 @@ sub rename_la_files {
                         ->name( '*.la' )
                         ->in( '.' );
     foreach my $file (@la_files) {
-        say "Renaming $file so it will not intefere with gdal compilation";
+        say "Renaming $file so it will not interfere with gdal compilation";
         rename $file, $file . '.bak';
     }
 
