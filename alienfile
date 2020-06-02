@@ -96,6 +96,7 @@ share {
     $make_cmd,
     #\&pause,
     $make_inst_cmd,
+    '%{make} clean',
     \&rename_la_files,
   ];
 
