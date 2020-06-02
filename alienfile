@@ -71,7 +71,7 @@ share {
 
   my $make_cmd = '%{make}';
   my $make_inst_cmd = '%{make} install';
-  my @make_clean;
+
   #  try not to exceed the cpan-testers log limits
   if ($on_automated_rig) {
     say "Running under CI or automated testing";
@@ -85,11 +85,8 @@ share {
         $make_inst_cmd =~ s/type/cat/;
         $make_inst_cmd =~ s/"/'/g;
     }
-    if (! ($ENV{TRAVIS} || $ENV{APPVEYOR})) {
-        push @make_clean, '%{make} clean';
-    }
+
     #  clean up the build dir on cpan testers etc
-    #after 'build' => \&cleanse_build_dir;
     plugin 'Cleanse::BuildDir';
   }
   
@@ -99,7 +96,6 @@ share {
     $make_cmd,
     #\&pause,
     $make_inst_cmd,
-    @make_clean,
     \&rename_la_files,
   ];
 
