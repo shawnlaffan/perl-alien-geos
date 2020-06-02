@@ -84,7 +84,7 @@ script:
   
   - echo Dumping alien.json file
   - cat `find blib -name alien.json -print`
-  - echo ========
-  - echo Dumping geos-config
-  - cat `find blib -name geos-config -print`
+  - [ "$TRAVIS_OS_NAME" == "osx" ] || echo ========
+  - [ "$TRAVIS_OS_NAME" == "osx" ] || echo Dumping geos-config
+  - [ "$TRAVIS_OS_NAME" == "osx" ] || cat `find blib -name geos-config -print`
 
