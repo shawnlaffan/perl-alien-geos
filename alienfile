@@ -1,6 +1,7 @@
 use 5.010;
 use alienfile;
 use Sort::Versions;
+use Path::Tiny;
 
 my $on_windows = ($^O =~ /mswin/i);
 my $on_automated_rig
@@ -123,6 +124,7 @@ sub set_rectangle_intersection {
     say 'set_rectangle_intersection: Currently in ' . getcwd();
     
     use File::Find::Rule;
+    use Path::Tiny qw /path/;
     my (@files)
       = File::Find::Rule
                 ->file()
@@ -131,19 +133,11 @@ sub set_rectangle_intersection {
     #  loop is brute force
     foreach my $file (@files) {
         say "Modifying file $file";
-        rename $file, "$file.bak";
-        open my $fh, '<', "$file.bak"
-          or die "Cannot open $file.bak for reading";
-        open my $ofh, '>', "$file"
-          or die "Cannot open $file for writing";
-        while (my $line = <$fh>) {
-            if ($line =~ m|//#define USE_RECTANGLE_INTERSECTION 1|) {
-                print {$ofh} "#define USE_RECTANGLE_INTERSECTION 1\n";
+        path($file)->edit (
+            sub {
+              s{^//(#define USE_RECTANGLE_INTERSECTION 1)}{$1}msx
             }
-            else {
-                print {$ofh} $line;
-            }
-        }
+        );
     }
 }
 
