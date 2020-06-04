@@ -12,7 +12,7 @@ sudo: required
 
 branches:
   except:
-  - /appveyor/
+    - /appveyor/
 
 cache:
   directories:
