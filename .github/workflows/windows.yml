@@ -59,14 +59,14 @@ jobs:
       - name: Cache Alien downloads
         uses: actions/cache@v1
         with:
-          path: .alienbuild
+          path: C:\Users\runneradmin\.alienbuild
           key: ${{ runner.os }}-build-${{ hashFiles('aliencache.txt') }}
           restore-keys: |
             ${{ runner.os }}-build-${{ hashFiles('aliencache.txt') }}
 
-      - name: Copy Alien cache to home
-        run: |
-          Copy-Item .alienbuild -Destination "$env:HOMEDRIVE$env:HOMEPATH/.alienbuild" -Recurse
+      #- name: Copy Alien cache to home
+      #  run: |
+      #    Copy-Item .alienbuild -Destination "$env:HOMEDRIVE$env:HOMEPATH/.alienbuild" -Recurse
   
       - name: Install dependencies 1
         run: |
@@ -106,9 +106,9 @@ jobs:
           gmake
           gmake test
 
-      - name: Copy Alien cache from home
-        run: |
-          Copy-Item -Path "$env:HOMEDRIVE$env:HOMEPATH/.alienbuild" -Destination .alienbuild  -Recurse
+      #- name: Copy Alien cache from home
+      #  run: |
+      #    Copy-Item -Path "$env:HOMEDRIVE$env:HOMEPATH/.alienbuild" -Destination .alienbuild  -Recurse
 
       #- name: Zip _alien
       #  #if: ${{ failure() }}
