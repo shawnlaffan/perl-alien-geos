@@ -84,6 +84,6 @@ script:
   
   - echo Dumping alien.json file
   - cat `find blib -name alien.json -print`
-  - [ "$TRAVIS_OS_NAME" == "osx" ] || echo ========
-  - [ "$TRAVIS_OS_NAME" == "osx" ] || find blib -name '*.la' -print
-
+  #- [ "$TRAVIS_OS_NAME" == "osx" ] || echo ========
+  #- [ "$TRAVIS_OS_NAME" == "osx" ] || find blib -name '*.la' -print
+  #
