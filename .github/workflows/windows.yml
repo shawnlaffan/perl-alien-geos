@@ -54,7 +54,6 @@ jobs:
           perl -V > aliencache.txt
           echo 'aliens 20200604b' >> aliencache.txt
           dir aliencache.txt
-          echo $env:HOMEDRIVE$env:HOMEPATH
 
       - name: Cache Alien downloads
         uses: actions/cache@v1
@@ -63,10 +62,6 @@ jobs:
           key: ${{ runner.os }}-build-${{ hashFiles('aliencache.txt') }}
           restore-keys: |
             ${{ runner.os }}-build-${{ hashFiles('aliencache.txt') }}
-
-      #- name: Copy Alien cache to home
-      #  run: |
-      #    Copy-Item .alienbuild -Destination "$env:HOMEDRIVE$env:HOMEPATH/.alienbuild" -Recurse
   
       - name: Install dependencies 1
         run: |
@@ -88,7 +83,6 @@ jobs:
 
       - name: Install more dependencies
         run: |
-          #  this is clunky, but we need to avoid Alien:curl for now
           cpanm Alien::Build::Plugin::Cleanse::BuildDir
           cpanm FFI::CheckLib
 
@@ -99,16 +93,12 @@ jobs:
           gcc -v
 
 
-      # Runs a set of commands using the runners shell
       - name: Build
         run: |
           perl Makefile.PL
           gmake
           gmake test
 
-      #- name: Copy Alien cache from home
-      #  run: |
-      #    Copy-Item -Path "$env:HOMEDRIVE$env:HOMEPATH/.alienbuild" -Destination .alienbuild  -Recurse
 
       #- name: Zip _alien
       #  #if: ${{ failure() }}
