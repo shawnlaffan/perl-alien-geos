@@ -54,11 +54,12 @@ jobs:
           perl -V > aliencache.txt
           echo 'aliens' >> aliencache.txt
           dir aliencache.txt
+          echo $env:HOMEPATH
 
       - name: Cache Alien downloads
         uses: actions/cache@v1
         with:
-          path: %HOMEPATH%/.alienbuild
+          path: $env:HOMEPATH/.alienbuild
           key: ${{ runner.os }}-build-${{ hashFiles('aliencache.txt') }}
           restore-keys: |
             ${{ runner.os }}-build-${{ hashFiles('aliencache.txt') }}
