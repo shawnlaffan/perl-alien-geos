@@ -28,11 +28,11 @@ cache:
 before_install:
     # Skip build if the commit message contains [skip travis] or [travis skip]
     #  (from https://github.com/htgoebel/pyinstaller/blob/develop/.travis.yml)
-  - >
-      echo "$TRAVIS_COMMIT_MESSAGE"
-      | grep -E  '\[(skip travis|travis skip)\]'
-      && echo "[skip travis] has been found, exiting."
-      && exit 0 || true
+  #- >
+  #    echo "$TRAVIS_COMMIT_MESSAGE"
+  #    | grep -E  '\[(skip travis|travis skip)\]'
+  #    && echo "[skip travis] has been found, exiting."
+  #    && exit 0 || true
 
   - if [ "$TRAVIS_OS_NAME" == "osx" ]; then brew ls --versions perl > /dev/null || brew install perl; fi;
   - if [ "$TRAVIS_OS_NAME" == "osx" ]; then brew outdated perl || brew upgrade perl; fi;
