@@ -2,6 +2,12 @@ freebsd_instance:
   image: freebsd-12-1-release-amd64
 
 task:
+  cpan_cache:
+    folder: /perl5
+    reupload_on_changes: false # set to false if there is a fingerprint script
+    fingerprint_script:
+      - echo $CIRRUS_OS 20200611
+      
   install_script:
     - sudo pkg install -y p5-App-cpanminus
     - sudo cpanm --installdeps --notest Alien::geos::af
