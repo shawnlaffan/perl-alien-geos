@@ -38,7 +38,7 @@ jobs:
       - name: Prepare for CPAN cache
         run: |
           perl -V > perlversion.txt
-          echo 'update 2020-06-11' >> perlversion.txt
+          echo 'update 2021-01-09' >> perlversion.txt
           dir perlversion.txt
 
       - name: Cache CPAN modules
@@ -67,24 +67,25 @@ jobs:
         run: |
           #cpanm --notest local::lib
           #eval "$(perl -Mlocal::lib=${PWD}/perl_modules)"
-          cpanm --quiet --notest Alien::Build
-          cpanm --quiet --notest Alien::Build::MM
-          cpanm --quiet --notest Sort::Versions
-          cpanm --quiet --notest PkgConfig
-          cpanm --quiet --notest Alien::Build::Plugin::Cleanse::BuildDir
-          cpanm --quiet --notest File::Find::Rule
-          cpanm --quiet --notest Alien::Build::Plugin::Fetch::Cache
-          cpanm --quiet --notest Env::ShellWords
+          cpanm --installdeps --quiet .
+          #cpanm --quiet --notest Alien::Build
+          #cpanm --quiet --notest Alien::Build::MM
+          #cpanm --quiet --notest Sort::Versions
+          #cpanm --quiet --notest PkgConfig
+          #cpanm --quiet --notest Alien::Build::Plugin::Cleanse::BuildDir
+          #cpanm --quiet --notest File::Find::Rule
+          #cpanm --quiet --notest Alien::Build::Plugin::Fetch::Cache
+          #cpanm --quiet --notest Env::ShellWords
 
       - name: Install dependencies Alien::MSYS
         run: |
           cpanm --notest Alien::MSYS
 
 
-      - name: Install more dependencies
-        run: |
-          cpanm Alien::Build::Plugin::Cleanse::BuildDir
-          cpanm FFI::CheckLib
+      #- name: Install more dependencies
+      #  run: |
+      #    cpanm Alien::Build::Plugin::Cleanse::BuildDir
+      #    cpanm FFI::CheckLib
 
   
       - name:  gcc

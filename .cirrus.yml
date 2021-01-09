@@ -6,7 +6,7 @@ task:
     folder: /perl5
     reupload_on_changes: false # set to false if there is a fingerprint script
     fingerprint_script:
-      - echo $CIRRUS_OS 20200611
+      - echo $CIRRUS_OS 20210109
       
   install_script:
     - sudo pkg install -y p5-App-cpanminus
