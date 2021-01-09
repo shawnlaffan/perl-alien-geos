@@ -1,4 +1,4 @@
-requires 'Alien:cmake3', 0.05;
+requires 'Alien::cmake3', 0.05;
 requires 'Alien::Build';
 requires 'Alien::Build::MM';
 requires 'Sort::Versions';
