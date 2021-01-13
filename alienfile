@@ -99,7 +99,7 @@ share {
     -G => '%{cmake_generator}',
     '-DCMAKE_MAKE_PROGRAM=%{make}',
     '-DBUILD_DOCUMENTATION=NO',
-    $run_tests ? () : '-DGEOS_ENABLE_TESTS=NO',
+    '-DGEOS_ENABLE_TESTS=' . $run_tests ? 'YES' : 'NO',
     #'-DCMAKE_BUILD_TYPE=Release',
     '-DCMAKE_POSITION_INDEPENDENT_CODE:BOOL=true',
     '-DCMAKE_INSTALL_PREFIX:PATH=%{.install.prefix}',
