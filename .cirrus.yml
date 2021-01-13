@@ -2,26 +2,40 @@ freebsd_instance:
   image: freebsd-12-1-release-amd64
 
 task:
+  env:
+    AUTOMATED_TESTING: 1
+    PERL_MOD_DIR: /perl5
+
   cpan_cache:
     folder: /perl5
     reupload_on_changes: false # set to false if there is a fingerprint script
     fingerprint_script:
-      - echo $CIRRUS_OS 20210109
+      - echo $CIRRUS_OS 20210113c
       
   install_script:
     - sudo pkg install -y p5-App-cpanminus
     - sudo pkg install -y cmake
+    - sudo cpanm local::lib
+    #- cpanm --local-lib=$PERL_MOD_DIR local::lib && eval $(perl -I ${PERL_MOD_DIR}/lib/perl5/ -Mlocal::lib)
+    - echo probe local::lib
+    - echo $(perl -I ${PERL_MOD_DIR}/lib/perl5 -Mlocal::lib)
+    - echo Run it anyway...
+    - eval $(perl -I ${PERL_MOD_DIR}/lib/perl5 -Mlocal::lib)
+    - echo $PATH
+    - echo $PERL5LIB
+    - echo $PERL_MM_OPT
     - sudo cpanm --installdeps --notest Alien::geos::af
-    - sudo cpanm --installdeps .
+    - sudo cpanm --installdeps --notest .
 
   script:
+    - eval $(perl -I ${PERL_MOD_DIR}/lib/perl5 -Mlocal::lib)
     - perl Makefile.PL
     - sudo cpanm --notest --installdeps .
     - make
     - make test
 
-    - echo Dumping alien.json file
-    - cat `find blib -name alien.json -print`
-    - echo ========
-    - echo .la files
-    - find blib -name '*.la' -print
+    #- echo Dumping alien.json file
+    #- cat `find blib -name alien.json -print`
+    #- echo ========
+    #- echo .la files
+    #- find blib -name '*.la' -print
