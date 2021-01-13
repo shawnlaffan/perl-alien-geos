@@ -12,6 +12,7 @@ my %common_reqs = (
     "Alien::Build::Plugin::Cleanse::BuildDir" => 0,
     'Sort::Versions' => 0,
     ($^O =~ /mswin/i) ? ("Alien::MSYS" => 0) : (),
+    'Alien::cmake3' => 0.05,
 );
 
 my %WriteMakefileArgs = (

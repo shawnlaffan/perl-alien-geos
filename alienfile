@@ -49,7 +49,8 @@ share {
   
   plugin Extract => (format => 'tar.bz2');
 
-  plugin 'Build::Autoconf' => ();
+  #plugin 'Build::Autoconf' => ();
+  plugin 'Build::CMake';
 
   my $build_static = ($on_windows) ? '' : '--disable-shared';
   $build_static = '';
@@ -66,6 +67,9 @@ share {
   elsif ($^O =~ /dragonfly/) {
     #  might need to be combined with bsd check above
     #  but not sure if /usr/local is needed yet
+    plugin 'Build::Make' => 'gmake';
+  }
+  elsif ($^O eq 'MSWin32') {
     plugin 'Build::Make' => 'gmake';
   }
 
@@ -89,23 +93,43 @@ share {
     #  clean up the build dir on cpan testers etc
     plugin 'Cleanse::BuildDir';
   }
-  
+  my $cmake_cmd = [
+    '%{cmake}',
+    -G => '%{cmake_generator}',
+    '-DCMAKE_CXX_COMPILER=g++',  #  what about clang??
+    '-DCMAKE_C_COMPILER=gcc',
+    '-DCMAKE_MAKE_PROGRAM=gmake',  #  FIXME
+    '-DCMAKE_CXX_STANDARD=11',
+    '-DBUILD_DOCUMENTATION=NO',
+    #'-DCMAKE_BUILD_TYPE=Release',
+    '-DCMAKE_POSITION_INDEPENDENT_CODE:BOOL=true',
+    '-DCMAKE_INSTALL_PREFIX:PATH=%{.install.prefix}',
+    '..'
+  ];
   build [
     #\&set_rectangle_intersection,  #  disable
-    "%{configure} $with_local $with_cpp11 $build_static",
-    $make_cmd,
+    #"%{configure} $with_local $with_cpp11 $build_static",
+    #'echo %{make}',
     #\&pause,
+    'mkdir build.cmake',
+    'cd build.cmake',
+    $cmake_cmd,
+    $make_cmd,
     $make_inst_cmd,
+    #$make_cmd,
+    ##\&pause,
+    #$make_inst_cmd,
     \&rename_la_files,
   ];
 
 };
 
 
-gather [
-    #  get all the geos-config fields
-    \&set_runtime_props_from_config,
-];
+#  needed for cmake?
+#gather [
+#    #  get all the geos-config fields
+#    \&set_runtime_props_from_config,  # FIXME - disabled for cmake debug
+#];
 
 sub set_rectangle_intersection {
     my ($build) = @_;
