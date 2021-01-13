@@ -76,6 +76,7 @@ share {
   my $make_cmd = '%{make}';
   my $make_inst_cmd = '%{make} install';
   my $run_tests = $ENV{ALIEN_GEOS_ENABLE_TESTS};
+  my $run_tests_bool_text = $run_tests ? 'ON' : 'OFF';
 
   #  try not to exceed the cpan-testers log limits
   if ($on_automated_rig) {
@@ -99,13 +100,16 @@ share {
     -G => '%{cmake_generator}',
     '-DCMAKE_MAKE_PROGRAM=%{make}',
     '-DBUILD_DOCUMENTATION=NO',
-    '-DGEOS_ENABLE_TESTS=' . ($run_tests ? 'ON' : 'OFF'),
-    '-DBUILD_TESTING:BOOL=' . ($run_tests ? 'ON' : 'OFF'),
+    "-DGEOS_ENABLE_TESTS=$run_tests_bool_text", #  seems not be in the soure tree?
+    "-DBUILD_TESTING:BOOL=$run_tests_bool_text",
     #'-DCMAKE_BUILD_TYPE=Release',
     '-DCMAKE_POSITION_INDEPENDENT_CODE:BOOL=true',
     '-DCMAKE_INSTALL_PREFIX:PATH=%{.install.prefix}',
     '..'
   ];
+  
+  #say join ' ', @$cmake_cmd;
+
   build [
     #\&set_rectangle_intersection,  #  disable
     #"%{configure} $with_local $with_cpp11 $build_static",
