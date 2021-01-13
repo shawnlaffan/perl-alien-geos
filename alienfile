@@ -96,10 +96,7 @@ share {
   my $cmake_cmd = [
     '%{cmake}',
     -G => '%{cmake_generator}',
-    #'-DCMAKE_CXX_COMPILER=g++',  #  what about clang??
-    #'-DCMAKE_C_COMPILER=gcc',
     '-DCMAKE_MAKE_PROGRAM=%{make}',
-    '-DCMAKE_CXX_STANDARD=11',
     '-DBUILD_DOCUMENTATION=NO',
     #'-DCMAKE_BUILD_TYPE=Release',
     '-DCMAKE_POSITION_INDEPENDENT_CODE:BOOL=true',
