@@ -143,7 +143,7 @@ gather [
 sub copy_geos_c_dll {
   my $build = shift;
   
-  return unless $^O eq 'MSWin32';
+  #return unless $^O eq 'MSWin32';
   
   use Cwd;
   log getcwd();
