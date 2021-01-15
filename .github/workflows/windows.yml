@@ -69,14 +69,6 @@ jobs:
           #cpanm --notest local::lib
           #eval "$(perl -Mlocal::lib=${PWD}/perl_modules)"
           cpanm --installdeps --quiet .
-          #cpanm --quiet --notest Alien::Build
-          #cpanm --quiet --notest Alien::Build::MM
-          #cpanm --quiet --notest Sort::Versions
-          #cpanm --quiet --notest PkgConfig
-          #cpanm --quiet --notest Alien::Build::Plugin::Cleanse::BuildDir
-          #cpanm --quiet --notest File::Find::Rule
-          #cpanm --quiet --notest Alien::Build::Plugin::Fetch::Cache
-          #cpanm --quiet --notest Env::ShellWords
 
       - name: Install dependencies Alien::MSYS
         run: |
