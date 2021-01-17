@@ -134,19 +134,18 @@ share {
 
 gather [
   \&copy_geos_c_dll,
+  \&copy_geos_so_on_bsd,
   #\&pause,
   #  get all the geos-config fields
   \&set_runtime_props_from_config,
 ];
 
+
 #  a bit brute force
 sub copy_geos_c_dll {
   my $build = shift;
   
-  #return unless $^O eq 'MSWin32';
-  
-  use Cwd;
-  log getcwd();
+  return unless $^O eq 'MSWin32';
   
   log 'Searching for libgeos_c.dll';
 
@@ -161,6 +160,38 @@ sub copy_geos_c_dll {
       log "copying $from to $to";
       eval {File::Copy::copy ("$from", "$to")};
       log $@ if $@;
+    }
+  }
+}
+
+#  also a bit brute force
+sub copy_geos_so_on_bsd {
+  my $build = shift;
+  
+  return unless $^O =~ /bsd/i;
+  
+  log 'Searching for libgeos so files to rename';
+
+  my %renames = (
+    'libgeos_c.so.1'   => 'libgeos_c.so.17',
+    'libgeos.so.3.9.0' => 'libgeos-3.9.0.so',
+  );
+  
+  foreach my $from_name (keys %renames) {
+    my $to_name = $renames{$from_name};
+
+    my @files
+      = File::Find::Rule->file()
+                        ->name( $from_name )
+                        ->in( '.' );
+  
+    foreach my $from (@files) {
+      my $to = Path::Tiny->new($from)->parent->child($to_name);
+      if (!$to->exists) {
+        log "copying $from to $to";
+        eval {File::Copy::copy ("$from", "$to")};
+        log $@ if $@;
+      }
     }
   }
 }
