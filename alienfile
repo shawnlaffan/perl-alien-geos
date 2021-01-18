@@ -176,6 +176,7 @@ sub copy_geos_so_on_bsd {
   my %renames = (
     'libgeos_c.so.1'   => 'libgeos_c.so.17',
     'libgeos.so.3.9.0' => 'libgeos-3.9.0.so',
+    'libgeos.so.3.9.0' => 'libgeos-3.so',
   );
   
   foreach my $from_name (keys %renames) {
