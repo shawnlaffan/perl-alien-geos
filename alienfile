@@ -97,7 +97,7 @@ share {
     }
 
     #  clean up the build dir on cpan testers etc
-    plugin 'Cleanse::BuildDir';
+    #plugin 'Cleanse::BuildDir';
   }
   my $cmake_cmd = [
     '%{cmake}',
@@ -165,6 +165,7 @@ sub copy_geos_c_dll {
 }
 
 #  also a bit brute force
+#  and numbering is volatile
 sub copy_geos_so_on_bsd {
   my $build = shift;
   
