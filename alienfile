@@ -264,6 +264,10 @@ sub set_runtime_props_from_config {
             #  windowsify the paths
             $build->runtime_prop->{$flag} =~ s|(?<=-[IL])/C/|C:/|i;
         }
+        if ($^O =~ /bsd/i) {
+            #  maybe will help?
+            $build->runtime_prop->{$flag} =~ s/-\d+$//;
+        }
         say "Runtime prop $flag is " . $build->runtime_prop->{$flag};
     }
 }
