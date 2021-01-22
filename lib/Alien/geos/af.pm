@@ -29,8 +29,9 @@ sub dynamic_libs {
         if (-d $dynamic) {
             $dir = $dynamic;
         }
-        
-        my @libs;
+
+        my @libs = $class->SUPER::dynamic_libs;
+
         push @libs, FFI::CheckLib::find_lib(
             lib        => ['geos', 'geos_c'],
             libpath    => $dir,
