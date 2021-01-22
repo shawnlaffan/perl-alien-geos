@@ -173,15 +173,16 @@ sub copy_geos_so_on_bsd {
   
   log 'Searching for libgeos so files to rename';
 
-  my %renames = (
-    'libgeos_c.so.1'   => 'libgeos_c.so.17',
-    'libgeos_c.so.1'   => 'libgeos_c.so',
-    'libgeos.so.3.9.0' => 'libgeos-3.9.0.so',
-    'libgeos.so.3.9.0' => 'libgeos-3.so',
+  my @renames = (
+    ['libgeos_c.so.1'   => 'libgeos_c.so.17'],
+    ['libgeos_c.so.1'   => 'libgeos_c.so'],
+    ['libgeos.so.3.9.0' => 'libgeos-3.9.0.so'],
+    ['libgeos.so.3.9.0' => 'libgeos-3.so'],
   );
+
   
-  foreach my $from_name (keys %renames) {
-    my $to_name = $renames{$from_name};
+  foreach my $names (@renames) {
+    my ($from_name, $to_name) = @$names;
 
     my @files
       = File::Find::Rule->file()
