@@ -104,7 +104,7 @@ share {
     -G => '%{cmake_generator}',
     '-DCMAKE_MAKE_PROGRAM=%{make}',
     '-DBUILD_DOCUMENTATION=NO',
-    "-DGEOS_ENABLE_TESTS=$run_tests_bool_text", #  seems not be in the soure tree?
+    "-DGEOS_ENABLE_TESTS=$run_tests_bool_text", #  seems not be in the source tree?
     "-DBUILD_TESTING:BOOL=$run_tests_bool_text",
     #'-DCMAKE_BUILD_TYPE=Release',
     '-DCMAKE_POSITION_INDEPENDENT_CODE:BOOL=true',
@@ -175,6 +175,7 @@ sub copy_geos_so_on_bsd {
 
   my %renames = (
     'libgeos_c.so.1'   => 'libgeos_c.so.17',
+    'libgeos_c.so.1'   => 'libgeos_c.so',
     'libgeos.so.3.9.0' => 'libgeos-3.9.0.so',
     'libgeos.so.3.9.0' => 'libgeos-3.so',
   );
