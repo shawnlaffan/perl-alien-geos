@@ -64,22 +64,13 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-build-${{ hashFiles('aliencache.txt') }}
   
-      - name: Install dependencies 1
-        run: |
-          #cpanm --notest local::lib
-          #eval "$(perl -Mlocal::lib=${PWD}/perl_modules)"
-          cpanm --installdeps --quiet .
-
       - name: Install dependencies Alien::MSYS
         run: |
           cpanm --notest Alien::MSYS
 
-
-      #- name: Install more dependencies
-      #  run: |
-      #    cpanm Alien::Build::Plugin::Cleanse::BuildDir
-      #    cpanm FFI::CheckLib
-
+      - name: Install dependencies 1
+        run: |
+          cpanm --installdeps --quiet .
   
       - name:  gcc
         run: |
@@ -92,33 +83,3 @@ jobs:
           perl Makefile.PL
           gmake
           gmake test
-
-
-      #- name: Zip _alien
-      #  #if: ${{ failure() }}
-      #  if: ${{ always() }}
-      #  run: |
-      #    pwd
-      #    & 7z.exe a _alien.7z
-      #    $sql_dir = perl -MAlien::sqlite -E"print Alien::sqlite->dist_dir"
-      #    & 7z.exe a sqlite3_dir.7z $sql_dir  
-      #    #dir *.sql
-      #    #$file = Get-Childitem –Path . -Include foo.sql -File -Recurse -ErrorAction SilentlyContinue
-      #    #$file
-      #    #Get-Content $file
-      #    #$sq3 = perl -MAlien::sqlite -E"print Alien::sqlite->bin_dir . '/sqlite3.exe'"
-      #    #Get-Content $file | & $sq3 foo.db
-      #
-      #- name: Upload artefact
-      #  if: ${{ always() }}
-      #  uses: actions/upload-artifact@v1
-      #  with:
-      #    name: _alien.7z
-      #    path: ./_alien.7z
-      #
-      #- name: Upload artefact
-      #  if: ${{ always() }}
-      #  uses: actions/upload-artifact@v1
-      #  with:
-      #    name: sqlite3_dir.7z
-      #    path: ./sqlite3_dir.7z
