@@ -68,7 +68,7 @@ jobs:
         run: |
           cpanm --quiet Alien::Build::Plugin::Fetch::Cache
           cpanm --installdeps --quiet Alien::MSYS
-          cpanm --notest --verbose Alien::MSYS
+          cpanm --notest --quiet Alien::MSYS
 
       - name: Install dependencies 1
         run: |
