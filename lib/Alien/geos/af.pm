@@ -43,6 +43,11 @@ sub dynamic_libs {
     }
 }
 
+sub cflags {
+    my ($self) = @_;
+    $self->SUPER::cflags;
+}
+
 1;
 
 __END__

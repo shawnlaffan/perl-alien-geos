@@ -10,3 +10,5 @@ requires 'Alien::Build::Plugin::Fetch::Cache';
 requires 'Env::ShellWords';
 requires 'FFI::CheckLib';
 requires 'HTML::LinkExtor';  #  not sure why?
+requires 'Path::Tiny';
+requires 'Capture::Tiny';
