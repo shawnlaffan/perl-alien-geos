@@ -251,18 +251,23 @@ sub update_geos_config {
     while (my $line = <$fh>) {
         if ($line =~ /^\s*prefix=/) {
             #  MSYS1 does not have realpath
-            
-            #my $part0 = q{perl -MCwd -e"print Cwd::abs_path (qq{$0})"};
-            #my $part1
-            #  = $on_windows
-            #  ?  q{BASEDIR=$(dirname "$0")}
-            #  :  q{BASEDIR=$(dirname $(realpath "$0"))};
-            my $part1 = q{BASEDIR=`perl -MCwd -e"print Cwd::abs_path (qq{$0})"`};
-            #  some variants use an escape function
-            my $part2 = $line =~ /`escape/
-              ? 'prefix=`escape "${BASEDIR}"`'
-              : 'prefix="${BASEDIR}"';
-            $line = "$part1\n$part2\n";
+            if (not $^O =~ /bsd/i) {
+                my $part1 = q{BASEPATH=`perl -MCwd -MFile::Spec -e"print Cwd::abs_path (qq{$0})"`};
+                #  some variants use an escape function
+                my $part2 = $line =~ /`escape/
+                  ? 'prefix=`escape "${BASEPATH}"`'
+                  : 'prefix="${BASEPATH}"';
+                my $part3 = 'prefix=$(dirname ${prefix})';
+                $line = "$part1\n$part2\n$part3\n";
+            }
+            else {
+                #my $part1 = q{BASEPATH=$(dirname $(realpath $0))};
+                my $part2 = $line =~ /`escape/
+                  ? 'prefix=`escape "$0"`'
+                  : 'prefix="$0"';
+                my $part3 = 'prefix=$(dirname $(realpath $0))';
+                $line = "$part2\n$part3\n";
+            }
         }
         $file_contents .= $line;
     }
