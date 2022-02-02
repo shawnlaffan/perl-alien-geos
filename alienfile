@@ -252,7 +252,8 @@ sub update_geos_config {
         if ($line =~ /^\s*prefix=/) {
             #  MSYS1 does not have realpath
             #if (not $^O =~ /bsd/i) {
-                my $part1 = q{BASEPATH=`perl -MCwd -MFile::Spec -e"print Cwd::abs_path (qq{$0})"`};
+                my $part1
+                  = q{BASEPATH=`perl -MCwd -MFile::Basename -e"print File::Basename::dirname(Cwd::abs_path (qq{$0}))"`};
                 #  some variants use an escape function
                 my $part2 = $line =~ /`escape/
                   ? 'prefix=`escape "${BASEPATH}"`'
