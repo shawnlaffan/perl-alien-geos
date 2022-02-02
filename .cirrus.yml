@@ -34,6 +34,12 @@ task:
     - make
     - make test
 
+    - echo XXXX
+    - echo GEOS CONFIG libs call
+    - cat `perl -Mblib -MAlien::geos::af -E'print Alien::geos::af->bin_dir . "/geos-config"'`
+    - echo XXXX
+    - echo `perl -Mblib -MAlien::geos::af -E'print Alien::geos::af->bin_dir . "/geos-config"'` --libs
+    - echo XXXX
     #- echo Dumping alien.json file
     #- cat `find blib -name alien.json -print`
     #- echo ========

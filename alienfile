@@ -251,7 +251,7 @@ sub update_geos_config {
     while (my $line = <$fh>) {
         if ($line =~ /^\s*prefix=/) {
             #  MSYS1 does not have realpath
-            if (not $^O =~ /bsd/i) {
+            #if (not $^O =~ /bsd/i) {
                 my $part1 = q{BASEPATH=`perl -MCwd -MFile::Spec -e"print Cwd::abs_path (qq{$0})"`};
                 #  some variants use an escape function
                 my $part2 = $line =~ /`escape/
@@ -259,15 +259,15 @@ sub update_geos_config {
                   : 'prefix="${BASEPATH}"';
                 my $part3 = 'prefix=$(dirname ${prefix})';
                 $line = "$part1\n$part2\n$part3\n";
-            }
-            else {
-                #my $part1 = q{BASEPATH=$(dirname $(realpath $0))};
-                my $part2 = $line =~ /`escape/
-                  ? 'prefix=`escape "$0"`'
-                  : 'prefix="$0"';
-                my $part3 = 'prefix=$(dirname $(realpath $0))';
-                $line = "$part2\n$part3\n";
-            }
+            #}
+            #else {
+            #    #my $part1 = q{BASEPATH=$(dirname $(realpath $0))};
+            #    my $part2 = $line =~ /`escape/
+            #      ? 'prefix=`escape "$0"`'
+            #      : 'prefix="$0"';
+            #    my $part3 = 'prefix=$(dirname $(realpath $0))';
+            #    $line = "$part2\n$part3\n";
+            #}
         }
         $file_contents .= $line;
     }
@@ -308,8 +308,10 @@ sub set_runtime_props_from_config {
     unshift @PKG_CONFIG_PATH, $pk_path;
     $build->log("PKG_CONFIG_PATH is $ENV{PKG_CONFIG_PATH}");
 
+    #  should use perl package api?
+    my $pkgconf = File::Which::which ('pkg-config') || File::Which::which ('ppkg-config');
     foreach my $flag (qw /cflags libs static/) {
-        my @cmd = ('pkg-config', "--$flag", 'geos');
+        my @cmd = ($pkgconf, "--$flag", 'geos');
         $build->log("Calling: " . join ' ', @cmd);
         my ($stdout, $stderr, @result) = Capture::Tiny::capture {system @cmd};
         $build->log("ERROR: $stderr") if $stderr;

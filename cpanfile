@@ -12,3 +12,4 @@ requires 'FFI::CheckLib';
 requires 'HTML::LinkExtor';  #  not sure why?
 requires 'Path::Tiny';
 requires 'Capture::Tiny';
+requires 'PkgConfig';
