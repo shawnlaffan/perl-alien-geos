@@ -16,7 +16,10 @@ use Cwd;
 my $base_dir = getcwd();
 
 configure {
-  requires 'File::Copy' => 0, 'File::Find::Rule' => 0;
+  requires
+      'File::Copy'       => 0,
+      'File::Find::Rule' => 0,
+      'Capture::Tiny'    => 0;
 };
 
 my $min_target_version = '3.6.0';
@@ -25,10 +28,14 @@ plugin 'Build::MSYS';
 
 probe sub {
     my($build) = @_;  # $build is the Alien::Build instance.
-    my $version = `geos-config --version`;
-    my $build_type
-      = $? == 0
-      && (versioncmp ($version, $min_target_version) == 1)
+    #my $version = `pkg-config geos --modversion` || `geos-config --version`;
+    my ($version, $stderr, @result) = Capture::Tiny::capture {system qw /pkg-config geos --modversion/};
+    if (!$version) {
+      #  fall back to geos-config if no geos.pc
+      #  and fall back to no version if it is not available
+      $version = `geos-config --version` || 0;
+    }
+    my $build_type = (versioncmp ($version, $min_target_version) > 0)
       ? 'system'
       : 'share';
     say "Build type is $build_type, found version " . ($version // 'n/a');
