@@ -26,22 +26,34 @@ my $min_target_version = '3.6.0';
 
 plugin 'Build::MSYS';
 
+plugin 'PkgConfig' => (
+    pkg_name => 'geos',
+    minimum_version => $min_target_version,
+);
 probe sub {
     my($build) = @_;  # $build is the Alien::Build instance.
-    #my $version = `pkg-config geos --modversion` || `geos-config --version`;
-    my ($version, $stderr, @result) = Capture::Tiny::capture {system qw /pkg-config geos --modversion/};
-    if (!$version) {
-      #  fall back to geos-config if no geos.pc
-      #  and fall back to no version if it is not available
-      $version = `geos-config --version` || 0;
-    }
+    #  fall back to geos-config if no geos.pc
+    #  and fall back to no version if it is not available
+    my $version = `geos-config --version` || 0;
+    #  could also fall back on CBuilder for GIS Internals if on windows and gdalinfo is found
+    #  https://metacpan.org/pod/Alien::Build::Plugin::Probe::CBuilder
     my $build_type = (versioncmp ($version, $min_target_version) > 0)
       ? 'system'
       : 'share';
-    say "Build type is $build_type, found version " . ($version // 'n/a');
+    say "Build type is $build_type, found version " . ($version || 'n/a');
     return $build_type;
 };
-
+if ($on_windows) {
+  if (my $path = `where geos_c.dll`) {
+    $path = Path::Tiny::path ($path)->parent->parent->stringify;
+    $path =~ s|\\|/|g;  #  path separators
+    Alien::Build->log ("Probe::CBuilder checking $path");
+    plugin 'Probe::CBuilder' => (
+      cflags => "-I$path/include",
+      libs   => "-L$path/lib -lgeos -lgeos_c",
+    );
+  }
+}
 
 share {
 
@@ -106,6 +118,10 @@ share {
     #  clean up the build dir on cpan testers etc
     #plugin 'Cleanse::BuildDir';
   }
+
+  #  might fix some rpath issues?
+  #  https://github.com/OSGeo/gdal/issues/5413#issuecomment-1060286925
+
   my $cmake_cmd = [
     '%{cmake}',
     -G => '%{cmake_generator}',
