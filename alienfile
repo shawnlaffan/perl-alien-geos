@@ -28,8 +28,15 @@ plugin 'Build::MSYS';
 
 plugin 'PkgConfig' => (
     pkg_name => 'geos',
-    minimum_version => $min_target_version,
+    atleast_version => $min_target_version,
 );
+#plugin 'Probe::CommandLine' => (
+#  command => 'geos-config',
+#  args    => [ '--version' ],
+#  #match   => qr/gzip/,
+#  version => qr/([0-9\.]+)/,
+#  #minimum_version => $min_target_version,  #  not yet supported
+#);
 probe sub {
     my($build) = @_;  # $build is the Alien::Build instance.
     #  fall back to geos-config if no geos.pc
