@@ -114,6 +114,11 @@ share {
 
   #  might fix some rpath issues?
   #  https://github.com/OSGeo/gdal/issues/5413#issuecomment-1060286925
+  my @rpath =
+    $on_windows ? ()
+    : $^O =~ /darwin/
+      ? q{-DCMAKE_INSTALL_RPATH='@loader_path'}
+      : q{-DCMAKE_INSTALL_RPATH='\$ORIGIN'};
 
   my $cmake_cmd = [
     '%{cmake}',
@@ -125,7 +130,7 @@ share {
     #'-DCMAKE_BUILD_TYPE=Release',
     '-DCMAKE_POSITION_INDEPENDENT_CODE:BOOL=true',
     '-DCMAKE_INSTALL_PREFIX:PATH=%{.install.prefix}',
-    q{-DCMAKE_INSTALL_RPATH='\$ORIGIN'},
+    @rpath,
     '-DBUILD_GEOSOP=OFF',
     '..'
   ];
