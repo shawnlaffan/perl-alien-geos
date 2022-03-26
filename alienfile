@@ -120,11 +120,13 @@ share {
     -G => '%{cmake_generator}',
     '-DCMAKE_MAKE_PROGRAM=%{make}',
     '-DBUILD_DOCUMENTATION=NO',
-    "-DGEOS_ENABLE_TESTS=$run_tests_bool_text", #  seems not be in the source tree?
+    #"-DGEOS_ENABLE_TESTS=$run_tests_bool_text", #  seems not be in the source tree?
     "-DBUILD_TESTING:BOOL=$run_tests_bool_text",
     #'-DCMAKE_BUILD_TYPE=Release',
     '-DCMAKE_POSITION_INDEPENDENT_CODE:BOOL=true',
     '-DCMAKE_INSTALL_PREFIX:PATH=%{.install.prefix}',
+    q{-DCMAKE_INSTALL_RPATH='\$ORIGIN'},
+    '-DBUILD_GEOSOP=OFF',
     '..'
   ];
   
