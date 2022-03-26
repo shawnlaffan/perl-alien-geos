@@ -153,7 +153,7 @@ share {
 gather [
   \&update_geos_config,
   \&copy_geos_c_dll,
-  \&copy_geos_so_on_bsd,
+  #\&copy_geos_so_on_bsd,
   #\&pause,
   #  get all the geos-config fields
   \&set_runtime_props_from_config,
