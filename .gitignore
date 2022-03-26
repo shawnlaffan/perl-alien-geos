@@ -22,4 +22,5 @@ nytprof.out
 _alien*
 /tarballs.zip
 /blib
+/blib*
 Alien-geos-af-*.tar.gz
