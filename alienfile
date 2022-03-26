@@ -112,6 +112,16 @@ share {
     #plugin 'Cleanse::BuildDir';
   }
 
+  meta->around_hook(
+    build => sub {
+      my ($orig, $build, @args) = @_;
+      $build->log("Setting CCACHE_BASEDIR to " . getcwd());
+      local $ENV{CCACHE_BASEDIR} = getcwd();
+      $orig->($build, @args);
+    }
+  );
+
+
   #  might fix some rpath issues?
   #  https://github.com/OSGeo/gdal/issues/5413#issuecomment-1060286925
   my @rpath =
