@@ -24,3 +24,5 @@ _alien*
 /blib
 /blib*
 Alien-geos-af-*.tar.gz
+
+/.idea
