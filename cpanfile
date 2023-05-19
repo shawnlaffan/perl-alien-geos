@@ -15,4 +15,4 @@ requires 'Capture::Tiny';
 requires 'PkgConfig';
 requires 'IO::Socket::SSL';
 requires 'Mozilla::CA';
-requirss 'Net::SSLeay';
+requires 'Net::SSLeay';
