@@ -79,7 +79,7 @@ jobs:
           gcc -v
 
 
-      - name: Build
+      - name: Build and run tests
         run: |
           perl Makefile.PL
           gmake
